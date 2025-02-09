@@ -8,10 +8,20 @@ import input from '@inquirer/input';
 import qr from "qr-image";
 import fs from "fs";
 
+
 // ----Prompt input-----
 const answer = await input({ message: 'Enter URL' });
-console.log(answer);
 
 // ----QR generator------
 const qr_png = qr.image(answer, { type: 'png' });
-qr_png.pipe(fs.createWriteStream('generate.png'));
+qr_png.pipe(fs.createWriteStream('generated_qr.png'));
+
+const filePath = "output.txt";
+
+fs.writeFile(filePath, answer, (err) => {
+    if (err) {
+        console.error("Error writing to file:", err);
+    } else {
+        console.log(`Text successfully saved to ${filePath}`);
+    }
+});
