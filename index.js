@@ -4,12 +4,14 @@
 3. Create a txt file to save the user input using the native fs node module.
 */
 
-// import inquirer from "inquirer";
-// import qr from "qr-image";
-// import fs from "fs";
+import input from '@inquirer/input';
+import qr from "qr-image";
+import fs from "fs";
 
-import { input } from '@inquirer/prompts';
+// ----Prompt input-----
+const answer = await input({ message: 'Enter URL' });
+console.log(answer);
 
-const answer = await input({ message: 'Enter your name' });
-
-console.log("ok");
+// ----QR generator------
+const qr_png = qr.image(answer, { type: 'png' });
+qr_png.pipe(fs.createWriteStream('generate.png'));
